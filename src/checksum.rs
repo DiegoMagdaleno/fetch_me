@@ -1,14 +1,12 @@
 use digest::{generic_array::GenericArray, Digest};
 use futures::prelude::*;
 use hex::FromHex;
-use md5::Md5;
 use serde::Deserialize;
 use sha2::Sha256;
 use std::{convert::TryFrom, io};
 
 #[derive(Debug)]
 pub enum Checksum {
-    Md5(GenericArray<u8, <Md5 as Digest>::OutputSize>),
     Sha256(GenericArray<u8, <Sha256 as Digest>::OutputSize>),
 }
 
@@ -21,20 +19,17 @@ pub enum ChecksumError {
 }
 
 pub enum SumStr<'a> {
-    Md5(&'a str),
     Sha256(&'a str),
 }
 
 #[derive(Deserialize)]
 pub enum SumStrBuf {
-    Md5(String),
     Sha256(String),
 }
 
 impl SumStrBuf {
     pub fn as_ref(&self) -> SumStr {
         match self {
-            SumStrBuf::Md5(string) => SumStr::Md5(string.as_str()),
             SumStrBuf::Sha256(string) => SumStr::Sha256(string.as_str()),
         }
     }
@@ -45,9 +40,6 @@ impl<'a> TryFrom<SumStr<'a>> for Checksum {
 
     fn try_from(input: SumStr) -> Result<Self, Self::Error> {
         match input {
-            SumStr::Md5(sum) => {
-                <[u8; 16]>::from_hex(sum).map(GenericArray::from).map(Checksum::Md5)
-            }
             SumStr::Sha256(sum) => {
                 <[u8; 32]>::from_hex(sum).map(GenericArray::from).map(Checksum::Sha256)
             }
@@ -62,7 +54,6 @@ impl Checksum {
         buffer: &mut [u8],
     ) -> Result<(), ChecksumError> {
         match self {
-            Checksum::Md5(sum) => checksum::<Md5, F>(reader, buffer, sum).await,
             Checksum::Sha256(sum) => checksum::<Sha256, F>(reader, buffer, sum).await,
         }
     }

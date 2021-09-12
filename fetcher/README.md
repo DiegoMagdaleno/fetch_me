@@ -31,7 +31,6 @@ When run interactively (standard output is not a TTY), a progress bar is display
 
 Each input source may optionally define a checksum, which will be verified after fetching the file. If the checksum is not a match, the file which was fetched will be deleted. The following algorithms are currently supported:
 
-- MD5
 - SHA256
 
 ### Only fetch what you need

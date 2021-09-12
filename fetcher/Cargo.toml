@@ -7,19 +7,19 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-anyhow = "1"
+anyhow = "1.0.43"
 async-fetcher = { path = "../" }
-async-std = { version = "1", features = ["unstable"] }
-atty = "0.2"
-better-panic = "0.2"
-bytes = "0.5"
-enclose = "1"
-fomat-macros = "0.3"
-futures = "0.3"
-futures_codec = "0.4"
-http-client =  { version = "1", features = [ "native_client" ]}
-pbr = "1"
-ron = "0.5"
-serde = { version = "1", features = [ "derive" ]}
-surf = { version = " = 2.0.0-alpha.0" }
-thiserror = "1"
+async-std = { version = "1.10.0", features = ["unstable"] }
+atty = "0.2.14"
+better-panic = "0.2.0"
+bytes = "1.1.0"
+enclose = "1.1.8"
+fomat-macros = "0.3.1"
+futures = "0.3.17"
+futures_codec = "0.4.1"
+http-client =  { version = "6.5.1", features = [ "native_client" ] }
+pbr = "1.0.4"
+ron = "0.6.5"
+serde = { version = "1.0.130", features = [ "derive" ] }
+surf = "2.3.1"
+thiserror = "1.0.29"
